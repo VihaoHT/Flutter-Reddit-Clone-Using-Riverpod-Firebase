@@ -3,6 +3,7 @@ import 'package:flutter_reddit/core/common/error_text.dart';
 import 'package:flutter_reddit/core/common/loader.dart';
 import 'package:flutter_reddit/features/auth/controller/auth_controller.dart';
 import 'package:flutter_reddit/features/community/controller/community_controller.dart';
+import 'package:flutter_reddit/models/community_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -15,6 +16,12 @@ class CommunityScreen extends ConsumerWidget {
 
   void navigateToModTools(BuildContext context) {
     Routemaster.of(context).push('/mod-tools/$name');
+  }
+
+  void joinCommunity(Community community, BuildContext context, WidgetRef ref) {
+    ref
+        .watch(communityControllerProvider.notifier)
+        .joinCommunity(community, context);
   }
 
   @override
@@ -64,7 +71,8 @@ class CommunityScreen extends ConsumerWidget {
                               ),
                               community.mods.contains(user.uid)
                                   ? OutlinedButton(
-                                      onPressed: () => navigateToModTools(context),
+                                      onPressed: () =>
+                                          navigateToModTools(context),
                                       style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -76,7 +84,9 @@ class CommunityScreen extends ConsumerWidget {
                                       child: const Text('Mod Tools'),
                                     )
                                   : OutlinedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        joinCommunity(community, context, ref);
+                                      },
                                       style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
