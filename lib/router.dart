@@ -7,6 +7,7 @@ import 'package:flutter_reddit/features/community/screens/edit_community_screen.
 import 'package:flutter_reddit/features/community/screens/mod_tools_screen.dart';
 import 'package:flutter_reddit/features/home/screens/home_screen.dart';
 import 'package:flutter_reddit/features/post/screens/add_post_type_screen.dart';
+import 'package:flutter_reddit/features/post/screens/comments_screen.dart';
 import 'package:flutter_reddit/features/user_profile/screens/edit_profile_screen.dart';
 import 'package:flutter_reddit/features/user_profile/screens/user_profile_screen.dart';
 import 'package:routemaster/routemaster.dart';
@@ -46,5 +47,9 @@ final loggedInRoute = RouteMap(routes: {
   '/add-post/:type': (routeData) => MaterialPage(
           child: AddPostTypeScreen(
         type: routeData.pathParameters['type']!,
+      )),
+  '/post/:postId/comments': (routeData) => MaterialPage(
+          child: CommentsScreen(
+        postId: routeData.pathParameters['postId']!,
       )),
 });

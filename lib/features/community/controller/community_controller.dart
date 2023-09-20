@@ -7,9 +7,14 @@ import 'package:flutter_reddit/core/utils.dart';
 import 'package:flutter_reddit/features/auth/controller/auth_controller.dart';
 import 'package:flutter_reddit/features/community/repository/community_repository.dart';
 import 'package:flutter_reddit/models/community_model.dart';
+import 'package:flutter_reddit/models/post_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:routemaster/routemaster.dart';
+
+final getCommunityPostProvider = StreamProvider.family((ref, String name) {
+  return ref.watch(communityControllerProvider.notifier).getCommunityPosts(name);
+});
 
 final getCommunityByNameProvider = StreamProvider.family((ref, String name) {
   return ref
@@ -147,5 +152,9 @@ class CommunityController extends StateNotifier<bool> {
     res.fold((l) => showSnackBar(context, l.message), (r) {
       Routemaster.of(context).pop();
     });
+  }
+
+  Stream<List<Post>> getCommunityPosts(String name) {
+    return _communityRepository.getCommunityPosts(name);
   }
 }

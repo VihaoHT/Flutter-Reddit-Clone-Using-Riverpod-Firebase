@@ -8,19 +8,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
+  void signInAsGuest(BuildContext context, WidgetRef ref) {
+    ref.read(authControllerProvider.notifier).signInAsGuest(context);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = ref.watch(authControllerProvider);
     return Scaffold(
       appBar: AppBar(
-        title:  Image.asset(
-            Constants.logoPath,
-            height: 40,
-          ),
+        title: Image.asset(
+          Constants.logoPath,
+          height: 40,
+        ),
         centerTitle: true,
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              signInAsGuest(context, ref);
+            },
             child: const Text(
               'Skip',
               style: TextStyle(
