@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_reddit/core/common/error_text.dart';
 import 'package:flutter_reddit/core/common/loader.dart';

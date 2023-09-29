@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_reddit/core/constants/constants.dart';
 import 'package:flutter_reddit/core/constants/firebase_constants.dart';
 import 'package:flutter_reddit/core/failure.dart';
@@ -40,17 +41,24 @@ class AuthRepository {
 
   FutureEither<UserModel> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      UserCredential userCredential;
+      if (kIsWeb) {
+        GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
+        googleAuthProvider
+            .addScope("https://www.googleapis.com/auth/contacts.readonly");
+        userCredential = await _auth.signInWithPopup(googleAuthProvider);
+      } else {
+        final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
-      final googleAuth = await googleUser?.authentication;
+        final googleAuth = await googleUser?.authentication;
 
-      final credentail = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
+        final credentail = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
 
-      UserCredential userCredential =
-          await _auth.signInWithCredential(credentail);
+        userCredential = await _auth.signInWithCredential(credentail);
+      }
 
       UserModel userModel;
 
@@ -112,8 +120,9 @@ class AuthRepository {
         (event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
   }
 
-  void logOut() async {
-    await _googleSignIn.signOut();
-    await _auth.signOut();
-  }
+  Future<void> logOut() async {
+  await _auth.signOut();
+  await _googleSignIn.signOut();
 }
+}
+  

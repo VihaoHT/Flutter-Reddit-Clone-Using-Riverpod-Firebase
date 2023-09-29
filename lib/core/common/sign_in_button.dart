@@ -3,11 +3,12 @@ import 'package:flutter_reddit/core/constants/constants.dart';
 import 'package:flutter_reddit/features/auth/controller/auth_controller.dart';
 import 'package:flutter_reddit/theme/pallete.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sizer/sizer.dart';
 
 class SignInButton extends ConsumerWidget {
   const SignInButton({super.key});
 
-  void signInWithGoogle(BuildContext context,WidgetRef ref) {
+  void signInWithGoogle(BuildContext context, WidgetRef ref) {
     ref.read(authControllerProvider.notifier).signInWithGoogle(context);
   }
 
@@ -16,7 +17,7 @@ class SignInButton extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(18.0),
       child: ElevatedButton.icon(
-        onPressed: () => signInWithGoogle(context,ref),
+        onPressed: () => signInWithGoogle(context, ref),
         icon: Image.asset(
           Constants.googlePath,
           height: 35,
@@ -27,7 +28,7 @@ class SignInButton extends ConsumerWidget {
         ),
         style: ElevatedButton.styleFrom(
             backgroundColor: Pallete.greyColor,
-            minimumSize: const Size(double.infinity, 50),
+            minimumSize:  const Size(double.infinity, 20),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20))),
       ),

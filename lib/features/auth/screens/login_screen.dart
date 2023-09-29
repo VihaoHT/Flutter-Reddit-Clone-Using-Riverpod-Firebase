@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reddit/core/common/loader.dart';
+import 'package:flutter_reddit/core/common/responsive.dart';
 import 'package:flutter_reddit/core/common/sign_in_button.dart';
 import 'package:flutter_reddit/core/constants/constants.dart';
 import 'package:flutter_reddit/features/auth/controller/auth_controller.dart';
@@ -58,7 +59,7 @@ class LoginScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const SignInButton()
+                const Responsive(child: SignInButton())
               ],
             ),
     );

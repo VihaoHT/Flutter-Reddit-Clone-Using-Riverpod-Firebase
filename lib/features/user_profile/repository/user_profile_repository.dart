@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_reddit/core/constants/firebase_constants.dart';
-import 'package:flutter_reddit/core/enums/enums.dart';
 import 'package:flutter_reddit/core/failure.dart';
 import 'package:flutter_reddit/core/providers/firebase_providers.dart';
 import 'package:flutter_reddit/core/type_defs.dart';
